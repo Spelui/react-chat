@@ -1,0 +1,65 @@
+.chatRoom {
+  background-color: #fafafa;
+}
+
+.InfUpChat {
+  display: flex;
+  align-items: center;
+  padding: 15px 10px;
+  background-color: #ececec;
+  border-bottom: 1px solid #cfcece;
+
+  &__img {
+    margin-right: 15px;
+  }
+}
+
+.chat {
+  ::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+  }
+
+  ::-webkit-resizer {
+    width: 0px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+  &__list {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    height: 100vh;
+    overflow: scroll;
+    padding-bottom: 175px;
+  }
+  &__send {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ececec;
+    border-top: 1px solid #cfcece;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    left: 30%;
+    padding: 20px;
+    z-index: 1;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 10px 40px 10px 15px;
+    border-radius: 25px;
+  }
+
+  &__btn {
+    position: absolute;
+    right: 29px;
+    top: 25px;
+    background-color: transparent;
+  }
+}

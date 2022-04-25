@@ -1,0 +1,15 @@
+.enter {
+  display: flex;
+  width: 100%;
+  padding: 20px 0;
+  justify-content: center;
+
+  &__btn {
+    padding: 20px;
+    border: none;
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 20px;
+    border-radius: 20px;
+  }
+}
