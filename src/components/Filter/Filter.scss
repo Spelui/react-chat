@@ -1,0 +1,13 @@
+.filter {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+
+  &__input {
+    width: 90%;
+    outline: none;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 20px;
+  }
+}

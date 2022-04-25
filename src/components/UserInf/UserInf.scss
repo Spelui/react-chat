@@ -1,0 +1,33 @@
+.userInf {
+  padding: 15px;
+  background-color: #ececec;
+  border-bottom: 1px solid #cfcece;
+
+  &__account {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__inf {
+    display: flex;
+    align-items: center;
+  }
+
+  &__photo {
+    display: block;
+    border-radius: 25px;
+    margin-right: 20px;
+  }
+
+  &__btn {
+    padding: 10px;
+    color: #000000;
+    background-color: transparent;
+
+    &:hover,
+    &:focus {
+      color: #4698e6;
+    }
+  }
+}

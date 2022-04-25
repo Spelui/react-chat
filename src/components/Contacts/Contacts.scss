@@ -1,0 +1,64 @@
+.contacts {
+  // position: relative;
+
+  ::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+  }
+
+  ::-webkit-resizer {
+    width: 0px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  &__title {
+    font-size: 20px;
+    color: #3e83c4;
+    margin: 25px 0 25px 10px;
+  }
+  &__list {
+    list-style: none;
+    overflow: scroll;
+    height: 100vh;
+  }
+  &__item {
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: -5%;
+      width: 115%;
+      height: 1px;
+      background-color: #ece7e7;
+    }
+
+    .active {
+      background-color: #9ac8f3;
+    }
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+  }
+
+  &__account {
+    display: flex;
+    align-items: center;
+  }
+
+  &__img {
+    margin-right: 10px;
+  }
+
+  &__name {
+    margin-bottom: 6px;
+  }
+}
