@@ -1,29 +1,32 @@
 import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useDocumentData } from "react-firebase-hooks/firestore";
+import { getApp } from "firebase/app";
+import { getFirestore, doc } from "firebase/firestore";
 import Contacts from "../Contacts/Contacts";
 import UserInf from "../UserInf/UserInf";
 import ChatRoom from "../ChatRoom/ChatRoom";
 import "./Main.scss";
-import { getFirestore, doc } from "firebase/firestore";
-import { useDocumentData } from "react-firebase-hooks/firestore";
-import { getApp } from "firebase/app";
+import EmptyPage from "../EmptyPage/EmptyPage";
 
 const Main = () => {
+  const [allFriends, setAllFriends] = useState([]);
   const firebaseApp = getApp();
 
-  const [allFriends, setAllFriends] = useState([{}]);
+  const [value] = useDocumentData(
+    doc(getFirestore(firebaseApp), "friends", "list"),
+    {
+      snapshotListenOptions: { includeMetadataChanges: true },
+    }
+  );
 
-  const [value] = useDocumentData(doc(getFirestore(firebaseApp), "friends"), {
-    snapshotListenOptions: { includeMetadataChanges: true },
-  });
+  useEffect(() => {
+    if (value !== undefined) {
+      const arr = [Object.values(value)];
+      setAllFriends(...arr);
+    }
+  }, [value]);
 
-  console.log("~ value", value);
-
-  // useEffect(() => {
-  //   if (value !== undefined) {
-  //     setAllFriends([...value.friends]);
-  //   }
-  // }, [value]);
   return (
     <main>
       <section>
@@ -34,15 +37,10 @@ const Main = () => {
           </div>
           <div className="right-side">
             <Routes>
-              <Route path="/" element="Choice a chat" />
+              <Route path="/" element={<EmptyPage />} />
               <Route
                 path=":id"
-                element={
-                  <ChatRoom
-                    allFriends={allFriends}
-                    setAllFriends={setAllFriends}
-                  />
-                }
+                element={<ChatRoom allFriends={allFriends} />}
               />
             </Routes>
           </div>

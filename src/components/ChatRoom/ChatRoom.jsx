@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fireStore } from "../../firebase";
+
 import { v4 as uuidv4 } from "uuid";
 
 import { getNewJoke } from "../../redux/message/messageSelectors";
@@ -9,33 +9,18 @@ import MessageItem from "../MessageItem/MessageItem";
 import { getJoke } from "../../redux/message/messageOperation";
 import { IoIosSend } from "react-icons/io";
 import "./ChatRoom.scss";
-
-// import { getDatabase, ref, set } from "firebase/database";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 const ChatRoom = ({ allFriends }) => {
   const [newMessage, setNewMessage] = useState("");
   const [infUpChat, setInfUpChat] = useState(null);
 
+  const db = getFirestore();
   const joke = useSelector(getNewJoke);
   const dispatch = useDispatch();
 
   const params = useParams();
   const idForAction = params.id.slice(1);
-
-  const addToCollocation = async () => {
-    // const db = getDatabase();
-    // await set(ref(db, "friends/FDvojx9n4UPIbQNWfaHa/friends"), [...newDb]);
-    const anotherFriends = allFriends.filter(
-      (friend) => friend.id !== idForAction
-    );
-
-    const newDb = [infUpChat, ...anotherFriends];
-    await fireStore
-      .collection("friends")
-      .doc("FDvojx9n4UPIbQNWfaHa")
-      .collection("friends")
-      .set(newDb);
-  };
 
   useEffect(() => {
     const friend = allFriends.filter((friend) => friend.id === idForAction);
@@ -46,49 +31,46 @@ const ChatRoom = ({ allFriends }) => {
     dispatch(getJoke());
   }, [dispatch]);
 
+  const addToDb = async (newDb) => {
+    await setDoc(doc(db, "friends", "list"), { ...newDb });
+  };
+
   const newDate = new Date();
 
   const createMessage = () => ({
     id: uuidv4(),
     message: newMessage,
     received: false,
-    createdAt: newDate.toLocaleString(),
+    createdAt: newDate.toLocaleString().toString(),
   });
 
   const createAnswer = () => ({
     id: uuidv4(),
     message: joke,
     received: true,
-    createdAt: newDate.toLocaleString(),
+    createdAt: newDate.toLocaleString().toString(),
   });
 
-  const addNewMessageToState = (e) => {
+  const addNewMessageToState = async (e) => {
     e.preventDefault();
+    const oldMessageLength = infUpChat.message.length;
+    console.log("~ oldMessageLength", oldMessageLength);
     const newMs = createMessage();
+    const answer = createAnswer();
     const newSent = {
       ...infUpChat,
-      message: [...infUpChat.message, newMs],
+      message: [...infUpChat.message, newMs, answer],
     };
     setInfUpChat(newSent);
 
     setNewMessage("");
 
-    addToCollocation();
+    const anotherFriends = allFriends.filter(
+      (friend) => friend.id !== idForAction
+    );
+    const newDb = [{ ...infUpChat[0], ...newSent }, ...anotherFriends];
 
-    // setTimeout(() => {
-    //   const answer = createAnswer();
-    //   const newReceived = {
-    //     ...infUpChat,
-    //     message: [...infUpChat.message, answer],
-    //   };
-    //   setInfUpChat(newReceived);
-    // }, 5000);
-
-    // const newMs = createMessage();
-    // const answer = createAnswer();
-    // dispatch(addNewMessage(newMs));
-    // setNewMessage("");
-    // setTimeout(() => dispatch(addNewMessage(answer)), 10000);
+    addToDb(newDb);
   };
 
   return (
@@ -118,7 +100,7 @@ const ChatRoom = ({ allFriends }) => {
             className="chat__input"
           />
           <button
-            onClick={addNewMessageToState}
+            onClick={(e) => addNewMessageToState(e)}
             disabled={newMessage.length < 1}
             className="chat__btn"
           >

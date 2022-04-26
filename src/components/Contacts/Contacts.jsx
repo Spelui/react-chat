@@ -9,7 +9,6 @@ const Contacts = ({ allFriends }) => {
 
   const filteredContacts = () => {
     const normalizeFilter = filter.toLowerCase();
-
     return allFriends.filter((friend) =>
       friend.name.toLowerCase().includes(normalizeFilter)
     );
@@ -19,9 +18,10 @@ const Contacts = ({ allFriends }) => {
     <div className="contacts">
       <h2 className="contacts__title">Chats</h2>
       <ul className="contacts__list">
-        {filteredContacts().map((friend) => (
-          <ContactsItem key={friend.id} friend={friend} />
-        ))}
+        {allFriends !== undefined &&
+          filteredContacts().map((friend) => (
+            <ContactsItem key={friend.id} friend={friend} />
+          ))}
       </ul>
     </div>
   );

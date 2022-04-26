@@ -20,6 +20,6 @@ const messageSlice = createSlice({
   },
 });
 
-export const { changeFilter, addFriends } = messageSlice.actions;
+export const { changeFilter } = messageSlice.actions;
 
 export default messageSlice.reducer;
