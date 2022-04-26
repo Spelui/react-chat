@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
-import { getFilter } from "../../redux/friends/friendsSelectors";
-import { changeFilter } from "../../redux/friends/friendsSlice";
+import { getFilter } from "../../redux/message/messageSelectors";
+import { changeFilter } from "../../redux/message/messageSlice";
 import "./Filter.scss";
 
 const Filter = () => {

@@ -13,7 +13,7 @@ const getJoke = createAsyncThunk("message/getJoke", async () => {
     const { value } = await joke();
     return value;
   } catch (e) {
-    console.log(e.message);
+    console.error(e.message);
   }
 });
 

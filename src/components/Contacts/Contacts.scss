@@ -1,17 +1,15 @@
 .contacts {
-  // position: relative;
-
   ::-webkit-scrollbar-button {
-    width: 0px;
-    height: 0px;
+    width: 1px;
+    height: 1px;
   }
 
   ::-webkit-resizer {
-    width: 0px;
+    width: 1px;
   }
 
   ::-webkit-scrollbar {
-    width: 0px;
+    width: 2px;
   }
 
   &__title {
@@ -21,7 +19,7 @@
   }
   &__list {
     list-style: none;
-    overflow: scroll;
+    overflow-y: scroll;
     height: 100vh;
   }
   &__item {
@@ -46,7 +44,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 15px;
+    padding: 15px;
   }
 
   &__account {

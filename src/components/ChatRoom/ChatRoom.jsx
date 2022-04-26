@@ -1,33 +1,39 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+
 import { v4 as uuidv4 } from "uuid";
 
-import { getFriends } from "../../redux/friends/friendsSelectors";
-import {
-  getMessage,
-  getNewJoke,
-  getMSA,
-} from "../../redux/message/messageSelectors";
-import { addNewMessage, addNewMessA } from "../../redux/message/messageSlice";
+import { getNewJoke } from "../../redux/message/messageSelectors";
 import MessageItem from "../MessageItem/MessageItem";
 import { getJoke } from "../../redux/message/messageOperation";
 import { IoIosSend } from "react-icons/io";
 import "./ChatRoom.scss";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 
-const ChatRoom = () => {
+const ChatRoom = ({ allFriends }) => {
   const [newMessage, setNewMessage] = useState("");
-  const friends = useSelector(getFriends);
-  const message = useSelector(getMessage);
-  const msA = useSelector(getMSA);
+  const [infUpChat, setInfUpChat] = useState(null);
+
+  const db = getFirestore();
   const joke = useSelector(getNewJoke);
   const dispatch = useDispatch();
+
   const params = useParams();
-  const idForAction = Number(params.id.slice(1));
+  const idForAction = params.id.slice(1);
+
+  useEffect(() => {
+    const friend = allFriends.filter((friend) => friend.id === idForAction);
+    setInfUpChat(...friend);
+  }, [allFriends, idForAction]);
 
   useEffect(() => {
     dispatch(getJoke());
-  }, [dispatch, message]);
+  }, [dispatch]);
+
+  const addToDb = async (newDb) => {
+    await setDoc(doc(db, "friends", "list"), { ...newDb });
+  };
 
   const newDate = new Date();
 
@@ -35,62 +41,74 @@ const ChatRoom = () => {
     id: uuidv4(),
     message: newMessage,
     received: false,
-    createdAt: newDate,
+    createdAt: newDate.toLocaleString().toString(),
   });
 
   const createAnswer = () => ({
     id: uuidv4(),
     message: joke,
     received: true,
-    createdAt: newDate,
+    createdAt: newDate.toLocaleString().toString(),
   });
 
-  const addNewMessageToState = (e) => {
+  const addNewMessageToState = async (e) => {
     e.preventDefault();
+    const oldMessageLength = infUpChat.message.length;
+    console.log("~ oldMessageLength", oldMessageLength);
     const newMs = createMessage();
     const answer = createAnswer();
-    dispatch(addNewMessage(newMs));
+    const newSent = {
+      ...infUpChat,
+      message: [...infUpChat.message, newMs, answer],
+    };
+    setInfUpChat(newSent);
+
     setNewMessage("");
-    setTimeout(dispatch(addNewMessage(answer)), 3000);
+
+    const anotherFriends = allFriends.filter(
+      (friend) => friend.id !== idForAction
+    );
+    const newDb = [{ ...infUpChat[0], ...newSent }, ...anotherFriends];
+
+    addToDb(newDb);
   };
 
-  const InfUpChat = friends.filter((friend) => friend.id === idForAction);
-
   return (
-    <div className="chatRoom">
-      <div className="InfUpChat">
-        <img
-          src={InfUpChat[0].photoURL}
-          alt="avatar"
-          width="45"
-          height="45"
-          className="InfUpChat__img"
-        />
-        <p className="InfUpChat__name">{InfUpChat[0].name}</p>
+    !!infUpChat && (
+      <div className="chatRoom">
+        <div className="InfUpChat">
+          <img
+            src={infUpChat.photoURL}
+            alt="avatar"
+            width="45"
+            height="45"
+            className="InfUpChat__img"
+          />
+          <p className="InfUpChat__name">{infUpChat.name}</p>
+        </div>
+        <ul className="chat__list">
+          {infUpChat.message.map((ms) => (
+            <MessageItem messageItem={ms} key={ms.id} />
+          ))}
+        </ul>
+        <div className="chat__send">
+          <input
+            type="text"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            placeholder="Type your message..."
+            className="chat__input"
+          />
+          <button
+            onClick={(e) => addNewMessageToState(e)}
+            disabled={newMessage.length < 1}
+            className="chat__btn"
+          >
+            <IoIosSend size={30} />
+          </button>
+        </div>
       </div>
-      <ul className="chat__list">
-        {idForAction === 1 &&
-          message.map((ms) => <MessageItem messageItem={ms} key={ms.id} />)}
-        {idForAction === 2 &&
-          msA.map((ms) => <MessageItem messageItem={ms} key={ms.id} />)}
-      </ul>
-      <div className="chat__send">
-        <input
-          type="text"
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          placeholder="Type your message..."
-          className="chat__input"
-        />
-        <button
-          onClick={addNewMessageToState}
-          disabled={newMessage.length < 1}
-          className="chat__btn"
-        >
-          <IoIosSend size={30} />
-        </button>
-      </div>
-    </div>
+    )
   );
 };
 
