@@ -1,5 +1,4 @@
-const getMessage = (state) => state.message.mess;
-const getMSA = (state) => state.message.messA;
 const getNewJoke = (state) => state.message.joke;
+const getFilter = (state) => state.message.filter;
 
-export { getMessage, getNewJoke, getMSA };
+export { getNewJoke, getFilter };
