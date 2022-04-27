@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
+import { useMediaQuery } from "react-responsive";
 
 import { getNewJoke } from "../../redux/message/messageSelectors";
 import MessageItem from "../MessageItem/MessageItem";
 import { getJoke } from "../../redux/message/messageOperation";
 import { IoIosSend } from "react-icons/io";
+import { MdArrowBack } from "react-icons/md";
 import "./ChatRoom.scss";
 
 const ChatRoom = ({ allFriends }) => {
@@ -21,6 +23,9 @@ const ChatRoom = ({ allFriends }) => {
 
   const params = useParams();
   const idForAction = params.id.slice(1);
+
+  const isMobile = useMediaQuery({ minWidth: 250, maxWidth: 767 });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const friend = allFriends.filter((friend) => friend.id === idForAction);
@@ -82,6 +87,11 @@ const ChatRoom = ({ allFriends }) => {
             className="InfUpChat__img"
           />
           <p className="InfUpChat__name">{activeFriend.name}</p>
+          {isMobile && (
+            <button className="InfUpChat__btn" onClick={() => navigate("/")}>
+              <MdArrowBack />
+            </button>
+          )}
         </div>
         <ul className="chat__list">
           {activeFriend.message.map((ms) => (

@@ -6,6 +6,7 @@ import "./Filter.scss";
 const Filter = () => {
   const filter = useSelector(getFilter);
   const dispatch = useDispatch();
+
   return (
     <div className="filter">
       <input

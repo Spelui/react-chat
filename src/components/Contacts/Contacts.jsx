@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
+
 import ContactsItem from "./ContactsItem";
 
 import { getFilter } from "../../redux/message/messageSelectors";
