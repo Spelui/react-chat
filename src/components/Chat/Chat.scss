@@ -1,0 +1,21 @@
+.chat {
+  display: flex;
+}
+
+.left-side {
+  width: 30%;
+  border-right: 1px solid #e0dbdb;
+
+  @media screen and (min-width: 767px) and (max-width: 1200px) {
+    width: 40%;
+  }
+}
+
+.right-side {
+  position: relative;
+  width: 70%;
+  // height: 100vh;
+  @media screen and (min-width: 767px) and (max-width: 1200px) {
+    width: 60%;
+  }
+}

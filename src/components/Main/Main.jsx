@@ -1,17 +1,15 @@
-import { Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { getApp } from "firebase/app";
 import { getFirestore, doc } from "firebase/firestore";
-import Contacts from "../Contacts/Contacts";
-import UserInf from "../UserInf/UserInf";
-import ChatRoom from "../ChatRoom/ChatRoom";
-import "./Main.scss";
-import EmptyPage from "../EmptyPage/EmptyPage";
+import { useMediaQuery } from "react-responsive";
+import Chat from "../Chat/Chat";
+import { MobileChat } from "../MobileChat/MobileChat";
 
 const Main = () => {
   const [allFriends, setAllFriends] = useState([]);
   const firebaseApp = getApp();
+  const isMobile = useMediaQuery({ minWidth: 250, maxWidth: 767 });
 
   const [value] = useDocumentData(
     doc(getFirestore(firebaseApp), "friends", "list"),
@@ -30,21 +28,11 @@ const Main = () => {
   return (
     <main>
       <section>
-        <div className="chat">
-          <div className="left-side">
-            <UserInf />
-            <Contacts allFriends={allFriends} />
-          </div>
-          <div className="right-side">
-            <Routes>
-              <Route path="/" element={<EmptyPage />} />
-              <Route
-                path=":id"
-                element={<ChatRoom allFriends={allFriends} />}
-              />
-            </Routes>
-          </div>
-        </div>
+        {isMobile ? (
+          <MobileChat allFriends={allFriends} />
+        ) : (
+          <Chat allFriends={allFriends} />
+        )}
       </section>
     </main>
   );

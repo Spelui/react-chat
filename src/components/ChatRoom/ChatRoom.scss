@@ -9,8 +9,17 @@
   background-color: #ececec;
   border-bottom: 1px solid #cfcece;
 
+  @media screen and (max-width: 767px) {
+    padding: 10px;
+  }
+
   &__img {
     margin-right: 15px;
+  }
+
+  &__btn {
+    font-size: 30px;
+    margin-left: auto;
   }
 }
 
@@ -27,6 +36,7 @@
   ::-webkit-scrollbar {
     width: 0px;
   }
+
   &__list {
     display: flex;
     flex-direction: column;
@@ -48,6 +58,15 @@
     left: 30%;
     padding: 20px;
     z-index: 1;
+
+    @media screen and (min-width: 767px) and (max-width: 1200px) {
+      left: 40%;
+    }
+
+    @media screen and (max-width: 767px) {
+      left: 0;
+      padding: 15px;
+    }
   }
 
   &__input {
@@ -61,5 +80,10 @@
     right: 29px;
     top: 25px;
     background-color: transparent;
+
+    @media screen and (max-width: 767px) {
+      right: 25px;
+      top: 19px;
+    }
   }
 }

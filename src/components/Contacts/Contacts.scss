@@ -16,6 +16,10 @@
     font-size: 20px;
     color: #3e83c4;
     margin: 25px 0 25px 10px;
+
+    @media screen and (max-width: 767px) {
+      margin: 10px 0 10px 10px;
+    }
   }
   &__list {
     list-style: none;
@@ -45,6 +49,10 @@
     align-items: center;
     justify-content: space-between;
     padding: 15px;
+
+    @media screen and (max-width: 767px) {
+      padding: 10px;
+    }
   }
 
   &__account {

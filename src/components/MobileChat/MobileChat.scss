@@ -1,0 +1,11 @@
+.mobile {
+  width: 100%;
+
+  &__account {
+    border-right: 1px solid #e0dbdb;
+  }
+
+  &__chat {
+    position: relative;
+  }
+}
