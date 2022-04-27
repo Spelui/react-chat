@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 import "./MessageItem.scss";
 
 const MessageItem = ({ messageItem }) => {
@@ -13,6 +15,15 @@ const MessageItem = ({ messageItem }) => {
       </span>
     </li>
   );
+};
+
+MessageItem.propTypes = {
+  messageItem: PropTypes.shape({
+    createdAt: PropTypes.string,
+    id: PropTypes.string,
+    message: PropTypes.string,
+    received: PropTypes.bool,
+  }),
 };
 
 export default MessageItem;

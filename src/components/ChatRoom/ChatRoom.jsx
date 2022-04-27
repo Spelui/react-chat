@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-
+import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 import { getNewJoke } from "../../redux/message/messageSelectors";
 import MessageItem from "../MessageItem/MessageItem";
 import { getJoke } from "../../redux/message/messageOperation";
 import { IoIosSend } from "react-icons/io";
 import "./ChatRoom.scss";
-import { getFirestore, doc, setDoc } from "firebase/firestore";
 
 const ChatRoom = ({ allFriends }) => {
   const [newMessage, setNewMessage] = useState("");
@@ -110,6 +110,10 @@ const ChatRoom = ({ allFriends }) => {
       </div>
     )
   );
+};
+
+ChatRoom.propTypes = {
+  allFriends: PropTypes.array,
 };
 
 export default ChatRoom;
