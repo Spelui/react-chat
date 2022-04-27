@@ -3,16 +3,16 @@ import { Routes, Route } from "react-router-dom";
 import Contacts from "../Contacts/Contacts";
 import UserInf from "../UserInf/UserInf";
 import ChatRoom from "../ChatRoom/ChatRoom";
-import "./MobileChat.scss";
+import s from "./MobileChat.module.scss";
 
 export const MobileChat = ({ allFriends }) => {
   return (
-    <div className="mobile">
+    <div className={s.mobile}>
       <Routes>
         <Route
           path="/"
           element={
-            <div className="mobile__account">
+            <div className={s.mobile__account}>
               <UserInf />
               <Contacts allFriends={allFriends} />
             </div>
@@ -21,7 +21,7 @@ export const MobileChat = ({ allFriends }) => {
         <Route
           path="/:id"
           element={
-            <div className="mobile__chat">
+            <div className={s.mobile__chat}>
               <ChatRoom allFriends={allFriends} />
             </div>
           }

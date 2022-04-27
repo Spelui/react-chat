@@ -32,3 +32,21 @@
     }
   }
 }
+
+.darkTheme {
+  background-color: #242222;
+
+  .userInf {
+    &__name {
+      color: #faf6f6;
+    }
+
+    &__btn {
+      color: #faf6f6;
+
+      &:hover {
+        color: #243b85;
+      }
+    }
+  }
+}

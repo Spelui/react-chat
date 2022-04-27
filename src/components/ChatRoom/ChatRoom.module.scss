@@ -15,6 +15,7 @@
 
   &__img {
     margin-right: 15px;
+    border-radius: 25px;
   }
 
   &__btn {
@@ -84,6 +85,46 @@
     @media screen and (max-width: 767px) {
       right: 25px;
       top: 19px;
+    }
+  }
+}
+
+.darkTheme {
+  background-color: #242222;
+
+  ::-webkit-scrollbar-button {
+    width: 0px;
+    height: 0px;
+  }
+
+  ::-webkit-resizer {
+    width: 0px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
+
+  .InfUpChat {
+    background-color: #353030;
+    color: #faf6f6;
+
+    &__btn {
+      background-color: transparent;
+      color: #faf6f6;
+    }
+  }
+
+  .chat {
+    &__send {
+      background-color: #353030;
+    }
+    &__input {
+      background-color: #797979;
+      color: #faf6f6;
+    }
+    &__btn {
+      color: #faf6f6;
     }
   }
 }
