@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useMediaQuery } from "react-responsive";
 
-import "./Contacts.scss";
+import s from "./Contacts.module.scss";
 
 const ContactsItem = ({ friend }) => {
   const lastMs = friend.message[friend.message.length - 1];
@@ -23,22 +23,22 @@ const ContactsItem = ({ friend }) => {
   };
 
   return (
-    <li key={friend.id} className="contacts__item">
-      <NavLink to={":" + friend.id} className="contacts__link">
-        <div className="contacts__account">
+    <li key={friend.id} className={s.contacts__item}>
+      <NavLink to={":" + friend.id} className={s.contacts__link}>
+        <div className={s.contacts__account}>
           <img
-            className="contacts__img"
+            className={s.contacts__img}
             src={friend.photoURL}
             alt="friend"
             width="45"
             height="45"
           />
-          <div className="contacts__inf">
-            <p className="contacts__name">{friend.name}</p>
-            <span className="contacts__message">{showLastMs()}</span>
+          <div className={s.contacts__inf}>
+            <p className={s.contacts__name}>{friend.name}</p>
+            <span className={s.contacts__message}>{showLastMs()}</span>
           </div>
         </div>
-        <p>{lastMs.createdAt}</p>
+        <p className={s.contacts__data}>{lastMs.createdAt}</p>
       </NavLink>
     </li>
   );

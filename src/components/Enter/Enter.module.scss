@@ -1,3 +1,22 @@
+.darkTheme {
+  background-color: #242222;
+
+  .enter__btn {
+    background-color: #faf6f6;
+    color: #000000;
+
+    &:hover {
+      color: #faf6f6;
+      background-color: #243b85;
+    }
+  }
+}
+
+.themeBtn {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+}
 .enter {
   position: relative;
   display: flex;
@@ -16,5 +35,9 @@
     color: #ffffff;
     font-size: 20px;
     border-radius: 20px;
+    &:hover {
+      color: #faf6f6;
+      background-color: #243b85;
+    }
   }
 }

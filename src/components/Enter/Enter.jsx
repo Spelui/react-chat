@@ -1,8 +1,13 @@
-import "./Enter.scss";
+import { useContext } from "react";
+import ThemeSwitcher from "../ThemeSwitcher/ThemeSwitcher";
+import { ThemeContext, themes } from "../../context/themeContext";
+import s from "./Enter.module.scss";
 
 import { auth, fireStore, googleProvider } from "../../firebase";
 
 const Enter = () => {
+  const { theme } = useContext(ThemeContext);
+
   const singInWithGoogle = async () => {
     try {
       await auth.signInWithPopup(googleProvider);
@@ -18,8 +23,15 @@ const Enter = () => {
   };
 
   return (
-    <div className="enter">
-      <button className="enter__btn" onClick={singInWithGoogle}>
+    <div
+      className={
+        theme === themes.light ? `${s.enter}` : `${s.enter} ${s.darkTheme}`
+      }
+    >
+      <div className={s.themeBtn}>
+        <ThemeSwitcher />
+      </div>
+      <button className={s.enter__btn} onClick={singInWithGoogle}>
         sing IN with google
       </button>
     </div>

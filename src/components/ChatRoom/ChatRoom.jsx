@@ -5,13 +5,15 @@ import PropTypes from "prop-types";
 import { v4 as uuidv4 } from "uuid";
 import { getFirestore, doc, setDoc } from "firebase/firestore";
 import { useMediaQuery } from "react-responsive";
+import { useContext } from "react";
+import { ThemeContext, themes } from "../../context/themeContext";
 
 import { getNewJoke } from "../../redux/message/messageSelectors";
 import MessageItem from "../MessageItem/MessageItem";
 import { getJoke } from "../../redux/message/messageOperation";
 import { IoIosSend } from "react-icons/io";
 import { MdArrowBack } from "react-icons/md";
-import "./ChatRoom.scss";
+import s from "./ChatRoom.module.scss";
 
 const ChatRoom = ({ allFriends }) => {
   const [newMessage, setNewMessage] = useState("");
@@ -26,6 +28,7 @@ const ChatRoom = ({ allFriends }) => {
 
   const isMobile = useMediaQuery({ minWidth: 250, maxWidth: 767 });
   const navigate = useNavigate();
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     const friend = allFriends.filter((friend) => friend.id === idForAction);
@@ -77,39 +80,45 @@ const ChatRoom = ({ allFriends }) => {
 
   return (
     !!activeFriend && (
-      <div className="chatRoom">
-        <div className="InfUpChat">
+      <div
+        className={
+          theme === themes.light
+            ? `${s.chatRoom}`
+            : `${s.chatRoom} ${s.darkTheme}`
+        }
+      >
+        <div className={s.InfUpChat}>
           <img
             src={activeFriend.photoURL}
             alt="avatar"
             width="45"
             height="45"
-            className="InfUpChat__img"
+            className={s.InfUpChat__img}
           />
-          <p className="InfUpChat__name">{activeFriend.name}</p>
+          <p className={s.InfUpChat__name}>{activeFriend.name}</p>
           {isMobile && (
-            <button className="InfUpChat__btn" onClick={() => navigate("/")}>
+            <button className={s.InfUpChat__btn} onClick={() => navigate("/")}>
               <MdArrowBack />
             </button>
           )}
         </div>
-        <ul className="chat__list">
+        <ul className={s.chat__list}>
           {activeFriend.message.map((ms) => (
             <MessageItem messageItem={ms} key={ms.id} />
           ))}
         </ul>
-        <div className="chat__send">
+        <div className={s.chat__send}>
           <input
             type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder="Type your message..."
-            className="chat__input"
+            className={s.chat__input}
           />
           <button
             onClick={(e) => addNewMessageToState(e)}
             disabled={newMessage.length < 1}
-            className="chat__btn"
+            className={s.chat__btn}
           >
             <IoIosSend size={30} />
           </button>
