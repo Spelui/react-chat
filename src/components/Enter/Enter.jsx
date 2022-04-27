@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import ThemeSwitcher from "../ThemeSwitcher/ThemeSwitcher";
 import { ThemeContext, themes } from "../../context/themeContext";
+import { FcGoogle } from "react-icons/fc";
 import s from "./Enter.module.scss";
 
 import { auth, fireStore, googleProvider } from "../../firebase";
@@ -32,7 +33,7 @@ const Enter = () => {
         <ThemeSwitcher />
       </div>
       <button className={s.enter__btn} onClick={singInWithGoogle}>
-        sing IN with google
+        <FcGoogle /> <p className={s.enter__text}>oogle</p>
       </button>
     </div>
   );

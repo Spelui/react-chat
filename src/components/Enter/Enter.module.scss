@@ -28,6 +28,8 @@
     position: absolute;
     top: 50%;
     left: 50%;
+    display: flex;
+    align-items: center;
     transform: translate(-50%, -50%);
     padding: 20px;
     border: none;
@@ -35,9 +37,15 @@
     color: #ffffff;
     font-size: 20px;
     border-radius: 20px;
+
     &:hover {
       color: #faf6f6;
       background-color: #243b85;
     }
+  }
+
+  &__text {
+    font-weight: 700;
+    font-size: 20px;
   }
 }
