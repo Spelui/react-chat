@@ -1,6 +1,7 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import Filter from "../Filter/Filter";
+import { FiLogOut } from "react-icons/fi";
 import "./UserInf.scss";
 
 const UserInf = () => {
@@ -21,7 +22,7 @@ const UserInf = () => {
         </div>
 
         <button className="userInf__btn" onClick={() => auth.signOut()}>
-          Log Out
+          <FiLogOut />
         </button>
       </div>
       <Filter />
