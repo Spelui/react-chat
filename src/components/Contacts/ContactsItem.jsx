@@ -1,12 +1,21 @@
 import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useMediaQuery } from "react-responsive";
 
 import "./Contacts.scss";
 
 const ContactsItem = ({ friend }) => {
   const lastMs = friend.message[friend.message.length - 1];
+  const isMobile = useMediaQuery({ minWidth: 250, maxWidth: 480 });
+  const isTab = useMediaQuery({ minWidth: 481, maxWidth: 1200 });
 
   const showLastMs = () => {
+    if (isMobile) {
+      return lastMs.message.slice(0, 17) + "...";
+    }
+    if (isTab) {
+      return lastMs.message.slice(0, 15) + "...";
+    }
     if (lastMs.message.length > 20) {
       return lastMs.message.slice(0, 20) + "...";
     }

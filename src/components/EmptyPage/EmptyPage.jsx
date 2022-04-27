@@ -1,23 +1,9 @@
-import React from "react";
-
-const divStyle = {
-  position: "relative",
-  width: "100%",
-  height: "100%",
-};
-
-const pStyle = {
-  fontSize: "40px",
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-};
+import "./EmptyPage.scss";
 
 const EmptyPage = () => {
   return (
-    <div className="empty" style={divStyle}>
-      <p style={pStyle}>Choice a Chat</p>
+    <div className="empty">
+      <p className="empty__text">Choice a Chat</p>
     </div>
   );
 };
