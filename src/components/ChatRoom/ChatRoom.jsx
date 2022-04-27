@@ -13,7 +13,7 @@ import "./ChatRoom.scss";
 
 const ChatRoom = ({ allFriends }) => {
   const [newMessage, setNewMessage] = useState("");
-  const [infUpChat, setInfUpChat] = useState(null);
+  const [activeFriend, setActiveFriend] = useState(null);
 
   const db = getFirestore();
   const joke = useSelector(getNewJoke);
@@ -24,12 +24,12 @@ const ChatRoom = ({ allFriends }) => {
 
   useEffect(() => {
     const friend = allFriends.filter((friend) => friend.id === idForAction);
-    setInfUpChat(...friend);
-  }, [allFriends, idForAction]);
+    setActiveFriend(...friend);
+  }, [allFriends, idForAction, activeFriend]);
 
   useEffect(() => {
     dispatch(getJoke());
-  }, [dispatch]);
+  }, [dispatch, idForAction, activeFriend?.message.length]);
 
   const addToDb = async (newDb) => {
     await setDoc(doc(db, "friends", "list"), { ...newDb });
@@ -53,41 +53,38 @@ const ChatRoom = ({ allFriends }) => {
 
   const addNewMessageToState = async (e) => {
     e.preventDefault();
-    const oldMessageLength = infUpChat.message.length;
-    console.log("~ oldMessageLength", oldMessageLength);
     const newMs = createMessage();
     const answer = createAnswer();
     const newSent = {
-      ...infUpChat,
-      message: [...infUpChat.message, newMs, answer],
+      ...activeFriend,
+      message: [...activeFriend.message, newMs, answer],
     };
-    setInfUpChat(newSent);
+    setActiveFriend(newSent);
 
     setNewMessage("");
 
     const anotherFriends = allFriends.filter(
       (friend) => friend.id !== idForAction
     );
-    const newDb = [{ ...infUpChat[0], ...newSent }, ...anotherFriends];
-
+    const newDb = [{ ...activeFriend[0], ...newSent }, ...anotherFriends];
     addToDb(newDb);
   };
 
   return (
-    !!infUpChat && (
+    !!activeFriend && (
       <div className="chatRoom">
         <div className="InfUpChat">
           <img
-            src={infUpChat.photoURL}
+            src={activeFriend.photoURL}
             alt="avatar"
             width="45"
             height="45"
             className="InfUpChat__img"
           />
-          <p className="InfUpChat__name">{infUpChat.name}</p>
+          <p className="InfUpChat__name">{activeFriend.name}</p>
         </div>
         <ul className="chat__list">
-          {infUpChat.message.map((ms) => (
+          {activeFriend.message.map((ms) => (
             <MessageItem messageItem={ms} key={ms.id} />
           ))}
         </ul>
