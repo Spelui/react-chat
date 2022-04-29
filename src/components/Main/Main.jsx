@@ -9,7 +9,7 @@ import { MobileChat } from "../MobileChat/MobileChat";
 const Main = () => {
   const [allFriends, setAllFriends] = useState([]);
   const firebaseApp = getApp();
-  const isMobile = useMediaQuery({ minWidth: 250, maxWidth: 767 });
+  const isMobile = useMediaQuery({ minWidth: 200, maxWidth: 767 });
 
   const [value] = useDocumentData(
     doc(getFirestore(firebaseApp), "friends", "list"),
