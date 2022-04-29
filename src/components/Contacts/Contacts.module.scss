@@ -36,6 +36,9 @@
     overflow-y: scroll;
     height: 100vh;
   }
+  .active {
+    background-color: #9ac8f3;
+  }
   &__item {
     position: relative;
 
@@ -47,10 +50,6 @@
       width: 115%;
       height: 1px;
       background-color: #ece7e7;
-    }
-
-    .active {
-      background-color: #9ac8f3;
     }
   }
 

@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useMediaQuery } from "react-responsive";
 
@@ -8,6 +8,8 @@ const ContactsItem = ({ friend }) => {
   const lastMs = friend.message[friend.message.length - 1];
   const isMobile = useMediaQuery({ minWidth: 250, maxWidth: 480 });
   const isTab = useMediaQuery({ minWidth: 481, maxWidth: 1200 });
+  const location = useLocation();
+  const idForAction = location.pathname.slice(2);
 
   const showLastMs = () => {
     if (isMobile) {
@@ -23,7 +25,14 @@ const ContactsItem = ({ friend }) => {
   };
 
   return (
-    <li key={friend.id} className={s.contacts__item}>
+    <li
+      key={friend.id}
+      className={
+        idForAction === friend.id
+          ? `${s.contacts__item} ${s.active}`
+          : s.contacts__item
+      }
+    >
       <NavLink to={":" + friend.id} className={s.contacts__link}>
         <div className={s.contacts__account}>
           <img
